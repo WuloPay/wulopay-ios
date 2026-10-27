@@ -31,6 +31,9 @@ public enum WuloPayCheckout {
                 }
             }
             session.presentationContextProvider = provider
+            // No shared cookies needed for a checkout, and an ephemeral session skips the system
+            // "wants to use … to sign in" prompt that a login flow would show.
+            session.prefersEphemeralWebBrowserSession = true
             if !session.start() {
                 continuation.resume(throwing: WuloPayCheckoutError.couldNotStart)
             }
